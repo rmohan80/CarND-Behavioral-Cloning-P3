@@ -4,6 +4,7 @@ from keras.models import Sequential
 from keras.layers import Convolution2D, ELU, Flatten, Dropout, Dense, Lambda, MaxPooling2D, Activation
 import cv2
 from keras.preprocessing.image import img_to_array, load_img
+from keras.utils.visualize_util import plot
 
 # Using Nvidia model with additional dropuot layer
 def nvidia_model():
@@ -59,6 +60,8 @@ def nvidia_model():
   #compile with normal adam optimizer and return
   model.compile(optimizer="adam", loss='mse')  
   model.summary()
+ 
+  plot(model, to_file='images/model.png', show_shapes=True)
   return model
 
 # Helper function to add random horizontal and vertical shift to images
@@ -78,7 +81,7 @@ def trans_image(image,steer, trans_range=0.004):
     return image_tr,steer_ang
 
 # Helper function to return 1 image along with steering angle
-# Input - row number
+# Input - image paths for every row in the csv
 # Output - processed image + steering angle for that particular image
 def get_row(row):
     
